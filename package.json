@@ -1,0 +1,12 @@
+{
+  "name": "enterwell-contest",
+  "version": "1.0.0",
+  "description": "Enterwell Contest Plugin SCSS build",
+  "scripts": {
+    "build-css": "sass assets/scss/style.scss assets/css/style.css --no-source-map --style=compressed && sass assets/scss/admin.scss assets/css/admin.css --no-source-map --style=compressed",
+    "watch-css": "sass --watch assets/scss/style.scss:assets/css/style.css assets/scss/admin.scss:assets/css/admin.css --style=expanded"
+  },
+  "devDependencies": {
+    "sass": "^1.70.0"
+  }
+}

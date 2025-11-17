@@ -34,7 +34,13 @@
 
             <?php endif; ?>
 
-            <div class="form-group floating mt-14">
+            <div class="form-group floating mobile d-block">
+                <input type="file" id="file-upload" name="file" accept=".pdf,.png,.jpg,.jpeg">
+                <label for="file">Fajl</label>
+                <span class="feedback d-block">PODRŽANI FORMATI: pdf, png, jpg</span>
+            </div>
+
+            <div class="form-group floating mt-26">
                 <input type="text" name="broj_racuna" id="broj_racuna" placeholder=" " required>
                 <label for="broj_racuna">Broj računa*</label>
                 <span class="feedback" aria-hidden="true">*Obavezna ispuna polja</span>

@@ -27,8 +27,19 @@ add_action('manage_contest_entry_posts_custom_column', function ($column, $post_
         case 'postanski_broj':
         case 'drzava':
         case 'kontakt_telefon':
-        case 'file':
             echo esc_html(get_post_meta($post_id, $column, true));
+            break;
+        case 'file':
+            $file_url = get_post_meta($post_id, 'file_url', true);
+            $file_name = get_post_meta($post_id, 'file_name', true);
+
+            if ($file_url && $file_name) {
+                echo '<a href="' . esc_url($file_url) . '" download>' . esc_html($file_name) . '</a>';
+            } elseif ($file_name) {
+                echo esc_html($file_name);
+            } else {
+                echo '<em>Nema fajla</em>';
+            }
             break;
     }
 }, 10, 2);

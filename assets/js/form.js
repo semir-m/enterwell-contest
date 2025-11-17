@@ -67,12 +67,12 @@ jQuery(document).ready(function ($) {
         if(state == true){
             $('.fields-column').addClass('overlay');
             $('#divider').addClass('overlay');
-            $('.mt-14').addClass('overlay');
+            $('.mt-26').addClass('overlay');
         }
         else{
             $('.fields-column').removeClass('overlay');
             $('#divider').removeClass('overlay');
-            $('.mt-14').removeClass('overlay');
+            $('.mt-26').removeClass('overlay');
         }
     }
 

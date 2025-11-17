@@ -35,6 +35,10 @@ body {
     }
 }
 
+.mobile {
+    display: none !important;
+}
+
 /* ==== FORM STICKER ==== */
 #sticker-image {
     width: 94px;
@@ -81,6 +85,8 @@ body {
     border-radius: 10px;
     padding: 50px 100px;
     box-shadow: 0px 1px 16px 0px rgba(0, 0, 0, 0.6) inset;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .centered {
@@ -91,6 +97,14 @@ body {
     text-align: center;
     width: 500px;
     margin: 0 auto;
+    max-width: 100%;
+
+    h1 {
+        font-family: $font-catamaran;
+        font-weight: 700;
+        font-size: 50px;
+        line-height: 100%;
+    }
 }
 
 .result-description {
@@ -313,7 +327,7 @@ body {
     margin: 0;
 }
 
-.mt-14{
+.mt-26{
     margin-top: 26px;
 }
 
@@ -329,12 +343,13 @@ body {
 .form-group {
     display: flex;
     flex-direction: column;
-    gap: 0.4rem;
+    gap: 26px;
 
     label {
         font-size: 0.9rem;
         color: #ddd;
         font-weight: 500;
+        font-family: $font-raleway;
     }
 
     input, select {
@@ -392,6 +407,7 @@ body {
         line-height: 20px;
         pointer-events: none;
         transition: all 0.2s ease;
+        font-family: $font-raleway;
     }
 
     input:focus + label, input:not(:placeholder-shown) + label {
@@ -402,6 +418,7 @@ body {
         color: $color-text;
         font-size: 10px;
         left: 15px;
+        font-family: $font-raleway;
     }
   }
 
@@ -432,7 +449,7 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
-    border: 1px solid #333;
+    border: 1px solid rgba(255, 255, 255, 0.26);
     border-radius: 8px;
     background: $color-wrapper;
     padding: 0 20px;
@@ -496,19 +513,15 @@ body {
 
 .hidden { display: none; }
 
-/* ==== SUCCESS / ERROR SCREENS ==== */
-.success-container,
-.error-container {
-    text-align: center;
-    padding: 3rem;
-    background: $color-wrapper;
-    border-radius: 12px;
-    border: 1px solid #333;
-}
-
 /* ==== RESPONSIVE ==== */
 @media (max-width: 820px) {
     .enterwell-contest-form { grid-template-columns: 1fr; }
-    .upload-column { order: -1; }
-    .enterwell-form-wrapper { padding: 2rem 1.5rem; }
+    .upload-column { order: -1; margin-left: 0; }
+    .enterwell-form-wrapper { padding: 2rem 1.5rem; width: 85%; padding-bottom: 60px; }
+    .mobile { margin-top: 80px; }
+    .form-group.floating input { height: 20px; width: 240px;}
+    .flag-select { width: 240px; }
+    #drop-zone, #divider { display: none; }
+    .fields-column { margin-top: -6px;}
+    .d-block { display: block !important; }
 }

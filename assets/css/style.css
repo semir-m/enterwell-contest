@@ -459,9 +459,6 @@ body input[type=number] {
     width: 85%;
     padding-bottom: 60px;
   }
-  .mobile {
-    margin-top: 80px;
-  }
   .form-group.floating input {
     height: 20px;
     width: 240px;
@@ -469,13 +466,28 @@ body input[type=number] {
   .flag-select {
     width: 240px;
   }
-  #drop-zone, #divider {
+  #divider, #drop-zone img, #drop-zone #upload-message, #drop-zone #upload-description {
     display: none;
   }
   .fields-column {
     margin-top: -6px;
   }
-  .d-block {
+  .mobile {
+    display: block !important;
+  }
+  #drop-zone {
+    border-width: 0;
+    background: unset;
+  }
+  #file-container {
+    margin-top: 80px;
+  }
+  #file-upload {
+    height: 20px;
+    padding: 10px 20px;
+    width: 240px;
+    border: 1px solid rgba(255, 255, 255, 0.26);
+    border-radius: 5px;
     display: block !important;
   }
 }

@@ -34,7 +34,7 @@ add_action('manage_contest_entry_posts_custom_column', function ($column, $post_
             $file_name = get_post_meta($post_id, 'file_name', true);
 
             if ($file_url && $file_name) {
-                echo '<a href="' . esc_url($file_url) . '" download>' . esc_html($file_name) . '</a>';
+                echo '<a href="' . esc_url($file_url) . '" target="_blank" download>' . esc_html($file_name) . '</a>';
             } elseif ($file_name) {
                 echo esc_html($file_name);
             } else {

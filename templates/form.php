@@ -23,7 +23,11 @@
                         </p>
                     </div>
 
-                    <input type="file" id="file-upload" name="file" accept=".pdf,.png,.jpg,.jpeg" hidden>
+                    <div class="form-group floating mobile" id="file-container">
+                        <input type="file" id="file-upload" name="file" accept=".pdf,.png,.jpg,.jpeg" hidden>
+                        <label for="file" class="mobile">Fajl</label>
+                        <span class="feedback mobile">PODRŽANI FORMATI: pdf, png, jpg</span>
+                    </div>
 
                     <p id="upload-description">
                         PODRŽANI FORMATI<br>
@@ -33,12 +37,6 @@
                 </div>
 
             <?php endif; ?>
-
-            <div class="form-group floating mobile d-block">
-                <input type="file" id="file-upload" name="file" accept=".pdf,.png,.jpg,.jpeg">
-                <label for="file">Fajl</label>
-                <span class="feedback d-block">PODRŽANI FORMATI: pdf, png, jpg</span>
-            </div>
 
             <div class="form-group floating mt-26">
                 <input type="text" name="broj_racuna" id="broj_racuna" placeholder=" " required>

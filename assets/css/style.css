@@ -381,7 +381,6 @@ body input[type=number] {
   position: relative;
   display: flex;
   align-items: center;
-  gap: 8px;
   border: 1px solid rgba(255, 255, 255, 0.26);
   border-radius: 8px;
   background: #1A1A1A;
@@ -390,11 +389,12 @@ body input[type=number] {
 .flag-select select {
   flex: 1;
   border: none;
-  background: transparent;
+  background: #1A1A1A;
   color: #fff;
   font-size: 1rem;
   cursor: pointer;
   appearance: none;
+  padding-left: 10px;
 }
 .flag-select img {
   width: 24px;

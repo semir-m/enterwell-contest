@@ -31,7 +31,7 @@ function enterwell_get_default_settings() {
     $all_fields = include plugin_dir_path(__FILE__) . 'fields.php';
 
     return [
-        'ajax_submit'  => 0,
+        'ajax_submit'  => 1,
         'success_page'  => 0,
         'error_page'    => 0,
 

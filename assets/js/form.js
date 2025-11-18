@@ -82,7 +82,6 @@ jQuery(document).ready(function ($) {
         if (!val) {
             $field.addClass('invalid');
             $field.closest('.form-group').find('.feedback').addClass('invalid-feedback').text('*Obavezna ispuna polja').show();
-            console.log('$field: ', $field);
             if($field[0].name == 'file'){
                 $('#drop-zone').addClass('danger');
                 $('#invalid-format-feedback').text('*Obavezna ispuna polja').removeClass('hidden');

@@ -166,7 +166,6 @@ body {
     &.idle, &.dragover, &.success {
         --dash: 10px;
         --gap: 4px;
-        --border-color: #BABABA;
         --border-width: 1px;
 
         background:
@@ -244,8 +243,13 @@ body {
         cursor: pointer;
     }
 
+    &.idle, &.success {
+        --border-color: rgba(186, 186, 186, 0.45);
+    }
+
     &.dragover {
         background-color: $color-wrapper;
+        --border-color: rgba(186, 186, 186);
 
         #upload-description {
             opacity: 20%;

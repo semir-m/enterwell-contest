@@ -3,6 +3,7 @@
 
     include plugin_dir_path(__FILE__) . '/partials/header.php';
     $visible = $settings['visible_fields'] ?? [];
+    $required = $settings['required_fields'] ?? [];
 ?>
 
 <div class="enterwell-form-wrapper">
@@ -24,8 +25,8 @@
                     </div>
 
                     <div class="form-group floating mobile" id="file-container">
-                        <input type="file" id="file-upload" name="file" accept=".pdf,.png,.jpg,.jpeg" hidden>
-                        <label for="file" class="mobile">Fajl</label>
+                        <input type="file" id="file-upload" name="file" accept=".pdf,.png,.jpg,.jpeg" hidden <?= !empty($required['file']) ? 'required' : '' ?>>
+                        <label for="file" class="mobile">Upload računa</label>
                         <span class="feedback mobile">PODRŽANI FORMATI: pdf, png, jpg</span>
                     </div>
 
@@ -58,10 +59,10 @@
 
                     if ($field['type'] === 'select'): ?>
                         <div class="form-group always-active">
-                            <label><?= esc_html($field['label']); ?><?= $field['required'] ? '*' : ''; ?></label>
+                            <label><?= esc_html($field['label']); ?><?= !empty($required[$key]) ? '*' : '' ?></label>
                             <div class="flag-select">
                                 <img id="selected-flag" src="https://flagcdn.com/hr.svg" alt="" width="24" height="14">
-                                <select name="<?= esc_attr($key); ?>" id="<?= esc_attr($key); ?>" <?= $field['required'] ? 'required' : ''; ?>>
+                                <select name="<?= esc_attr($key); ?>" id="<?= esc_attr($key); ?>" <?= !empty($required[$key]) ? 'required' : '' ?>>
                                     <?php foreach ($field['options'] as $code => $name): ?>
                                         <option value="<?= esc_attr($name); ?>" data-flag="https://flagcdn.com/<?= strtolower($code); ?>.svg">
                                             <?= esc_html($name); ?>
@@ -78,10 +79,10 @@
                                 name="<?= esc_attr($key); ?>"
                                 id="<?= esc_attr($key); ?>"
                                 placeholder=" "
-                                <?= $field['required'] ? 'required' : ''; ?>
+                                <?= !empty($required[$key]) ? 'required' : '' ?>
                                 <?= $field['attrs'] ?? ''; ?>
                             >
-                            <label for="<?= esc_attr($key); ?>"><?= esc_html($field['label']); ?><?= $field['required'] ? '*' : ''; ?></label>
+                            <label for="<?= esc_attr($key); ?>"><?= esc_html($field['label']); ?><?= !empty($required[$key]) ? '*' : '' ?></label>
                             <span class="feedback" aria-hidden="true">*Obavezna ispuna polja</span>
                         </div>
                     <?php endif;

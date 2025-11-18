@@ -143,7 +143,6 @@ body input[type=number] {
 .upload-column .upload-box.idle, .upload-column .upload-box.dragover, .upload-column .upload-box.success {
   --dash: 10px;
   --gap: 4px;
-  --border-color: #BABABA;
   --border-width: 1px;
   background: repeating-linear-gradient(to right, var(--border-color) 0 var(--dash), transparent var(--dash) calc(var(--dash) + var(--gap))) 0 0/100% var(--border-width) no-repeat, repeating-linear-gradient(to right, var(--border-color) 0 var(--dash), transparent var(--dash) calc(var(--dash) + var(--gap))) 0 100%/100% var(--border-width) no-repeat, repeating-linear-gradient(to bottom, var(--border-color) 0 var(--dash), transparent var(--dash) calc(var(--dash) + var(--gap))) 0 0/var(--border-width) 100% no-repeat, repeating-linear-gradient(to bottom, var(--border-color) 0 var(--dash), transparent var(--dash) calc(var(--dash) + var(--gap))) 100% 0/var(--border-width) 100% no-repeat;
   background-repeat: no-repeat;
@@ -185,8 +184,12 @@ body input[type=number] {
   text-decoration: underline solid 0%;
   cursor: pointer;
 }
+.upload-column .upload-box.idle, .upload-column .upload-box.success {
+  --border-color: rgba(186, 186, 186, 0.45);
+}
 .upload-column .upload-box.dragover {
   background-color: #1A1A1A;
+  --border-color: rgba(186, 186, 186);
 }
 .upload-column .upload-box.dragover #upload-description {
   opacity: 20%;

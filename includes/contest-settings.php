@@ -50,6 +50,13 @@ function enterwell_get_default_settings() {
 
         // visible fields (default: svi uključeni)
         'visible_fields' => array_fill_keys(array_keys($all_fields), 1),
+        'required_fields' => array_merge(
+            array_fill_keys(array_keys($all_fields), 1),
+            [
+                'email' => 1,
+                'broj_racuna' => 1,
+            ]
+        ),
     ];
 }
 
@@ -90,7 +97,14 @@ function enterwell_render_settings_page() {
 
             // visible fields
             'visible_fields' => array_map('intval', $_POST['visible_fields'] ?? []),
+            'required_fields' => array_map('intval', $_POST['required_fields'] ?? []),
         ];
+
+        $settings['visible_fields']['email'] = 1;
+        $settings['visible_fields']['broj_racuna'] = 1;
+        $settings['required_fields']['email'] = 1;
+        $settings['required_fields']['broj_racuna'] = 1;
+
         update_option('enterwell_contest_settings', $settings);
         echo '<div class="updated"><p>Settings saved.</p></div>';
     }
@@ -147,15 +161,36 @@ function enterwell_render_settings_page() {
             <div class="enterwell-card">
                 <h2>Polja forme</h2>
                 <?php foreach ($all_fields as $key => $field): ?>
-                    <div class="form-row">
-                        <label for="field_<?= esc_attr($key); ?>"><?= esc_html($field['label']); ?></label>
-                        <input type="checkbox" id="field_<?= esc_attr($key); ?>"
-                            name="visible_fields[<?= esc_attr($key); ?>]" value="1"
-                            <?= checked(!empty($visible_fields[$key])); ?>
-                            <?= ($key == 'broj_racuna' || $key == 'email') ? 'disabled' : '' ?>>
-                        <span>
-                            <?= ($key == 'broj_racuna' || $key == 'email') ? 'Obavezan prikaz na formi - validiramo polje' : 'Prikaži na formi' ?>
-                        </span>
+                    <div class="form-row" style="display:flex; align-items:center; gap:20px;">
+
+                        <label style="min-width:180px;">
+                            <?= esc_html($field['label']); ?>
+                        </label>
+
+                        <!-- Visible checkbox -->
+                        <label style="display:flex; align-items:center; gap:5px;">
+                            <input type="checkbox"
+                                name="visible_fields[<?= esc_attr($key); ?>]"
+                                value="1"
+                                <?= checked(!empty($visible_fields[$key]) || $key === 'email' || $key === 'broj_racuna'); ?>
+                                <?= ($key === 'email' || $key === 'broj_racuna') ? 'disabled' : '' ?>>
+                            <span>Vidljivo</span>
+                        </label>
+
+                        <!-- Required checkbox -->
+                        <label style="display:flex; align-items:center; gap:5px;">
+                            <input type="checkbox"
+                                name="required_fields[<?= esc_attr($key); ?>]"
+                                value="1"
+                                <?= checked(!empty($settings['required_fields'][$key])); ?>
+                                <?= ($key === 'email' || $key === 'broj_racuna') ? 'disabled' : '' ?>>
+                            <span>Obavezno</span>
+                        </label>
+
+                        <?php if ($key === 'email' || $key === 'broj_racuna'): ?>
+                            <span style="color:#777;">(uvijek vidljivo i obavezno)</span>
+                        <?php endif; ?>
+
                     </div>
                 <?php endforeach; ?>
             </div>
@@ -164,9 +199,21 @@ function enterwell_render_settings_page() {
             <div class="enterwell-card">
                 <h2>Odabir stranica</h2>
                 <div class="form-row">
+                    <label style="display:flex; align-items:center; gap:5px;">
+                        <input type="checkbox"
+                            class="required-fields-control"
+                            data-id="<?= esc_attr($key); ?>"
+                            name="required_fields[<?= esc_attr($key); ?>]"
+                            value="1"
+                            <?= checked(!empty($settings['required_fields'][$key])); ?>
+                            <?= ($key === 'email' || $key === 'broj_racuna') ? 'disabled' : '' ?>>
+                        <span>Obavezno</span>
+                    </label>
+                </div>
+                <div class="form-row">
                     <label for="success_page">Upješna prijava</label>
                     <select name="success_page" id="success_page">
-                        <option value="0">— Select —</option>
+                        <option value="0">— Odaberi stranicu —</option>
                         <?php foreach ($pages as $page): ?>
                             <option value="<?= esc_attr($page->ID); ?>" <?= selected($settings['success_page'], $page->ID, false); ?>>
                                 <?= esc_html($page->post_title); ?>
@@ -226,6 +273,36 @@ function enterwell_render_settings_page() {
             <?php submit_button('Spremi postavke', 'primary', 'enterwell_save_settings'); ?>
         </form>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const rows = document.querySelectorAll('.enterwell-card .form-row');
+
+            rows.forEach(row => {
+                const visible = row.querySelector('input[name^="visible_fields"]');
+                const required = row.querySelector('input[name^="required_fields"]');
+
+                if (!visible || !required) return;
+
+                // Skip protected fields
+                if (visible.disabled || required.disabled) return;
+
+                function updateState() {
+                    if (!visible.checked) {
+                        required.checked = false;
+                        required.disabled = true;
+                    } else {
+                        required.disabled = false;
+                    }
+                }
+
+                // Initialize on load
+                updateState();
+
+                // Add listeners
+                visible.addEventListener('change', updateState);
+            });
+        });
+    </script>
 
 <?php
 }

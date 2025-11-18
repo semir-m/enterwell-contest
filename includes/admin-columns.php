@@ -6,7 +6,7 @@ add_filter('manage_contest_entry_posts_columns', function ($columns) {
         'title'          => __('Ime i prezime', 'enterwell'),
         'email'          => __('Email', 'enterwell'),
         'broj_racuna'    => __('Broj računa', 'enterwell'),
-        'file'           => __('Fajl', 'enterwell'),
+        'file'           => __('Upload računa', 'enterwell'),
         'adresa'         => __('Adresa', 'enterwell'),
         'kucni_broj'     => __('Kućni broj', 'enterwell'),
         'mjesto'         => __('Mjesto', 'enterwell'),

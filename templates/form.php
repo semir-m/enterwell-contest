@@ -2,6 +2,7 @@
     if (!defined('ABSPATH')) exit;
 
     include plugin_dir_path(__FILE__) . '/partials/header.php';
+    $ajax_submit = $settings['ajax_submit'] ?? 0;
     $visible = $settings['visible_fields'] ?? [];
     $required = $settings['required_fields'] ?? [];
 ?>
@@ -16,7 +17,7 @@
             <?php if (!empty($visible['file'])): ?>
                 <div id="drop-zone" class="upload-box idle">
                     <div class="upload-state">
-                        <img id="upload-icon" src="<?= plugin_dir_url(__FILE__) ?>../assets/img/upload-idle.png" alt="Upload" />
+                        <img id="upload-icon" src="<?= plugin_dir_url(__FILE__) ?>../assets/img/upload-idle.svg" alt="Upload" />
                         <div id="file-info" class="hidden"></div>
                         <p id="upload-message">
                             Povuci i ispusti datoteku<br>kako bi započeo prijenos<br><br>
@@ -98,6 +99,6 @@
         </div>
     </form>
     <div class="form-submit">
-        <button type="submit" form="enterwell-form" class="btn-primary">Pošalji</button>
+        <button id="<?= $ajax_submit == 1 ? 'ajax-submit' : 'submit' ?>" type="<?= $ajax_submit == 1 ? 'button' : 'submit' ?>" form="enterwell-form" class="btn-primary">Pošalji</button>
     </div>
 </div>

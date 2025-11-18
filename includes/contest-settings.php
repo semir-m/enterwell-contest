@@ -31,6 +31,7 @@ function enterwell_get_default_settings() {
     $all_fields = include plugin_dir_path(__FILE__) . 'fields.php';
 
     return [
+        'ajax_submit'  => 0,
         'success_page'  => 0,
         'error_page'    => 0,
 
@@ -77,6 +78,9 @@ function enterwell_render_settings_page() {
     if (isset($_POST['enterwell_save_settings'])) {
         check_admin_referer('enterwell_save_settings_nonce');
         $settings = [
+            // ajax submit
+            'ajax_submit' => intval($_POST['ajax_submit'] ?? 0),
+
             // stranice
             'success_page' => intval($_POST['success_page'] ?? 0),
             'error_page'   => intval($_POST['error_page'] ?? 0),
@@ -197,17 +201,15 @@ function enterwell_render_settings_page() {
 
             <!-- Page selection -->
             <div class="enterwell-card">
-                <h2>Odabir stranica</h2>
+                <h2>Ajax submit i odabir stranica</h2>
                 <div class="form-row">
                     <label style="display:flex; align-items:center; gap:5px;">
-                        <input type="checkbox"
-                            class="required-fields-control"
-                            data-id="<?= esc_attr($key); ?>"
-                            name="required_fields[<?= esc_attr($key); ?>]"
+                        <input id="ajax_submit"
+                            name="ajax_submit"
+                            type="checkbox"
                             value="1"
-                            <?= checked(!empty($settings['required_fields'][$key])); ?>
-                            <?= ($key === 'email' || $key === 'broj_racuna') ? 'disabled' : '' ?>>
-                        <span>Obavezno</span>
+                            <?= checked($settings['ajax_submit']); ?>>
+                        <span>Koristi ajax submit?</span>
                     </label>
                 </div>
                 <div class="form-row">
@@ -275,7 +277,29 @@ function enterwell_render_settings_page() {
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+
+
+            const ajax_submit = document.getElementById('ajax_submit');
+            const successSelect = document.getElementById('success_page');
+            const errorSelect = document.getElementById('error_page');
             const rows = document.querySelectorAll('.enterwell-card .form-row');
+
+            function updateAjaxSubmitState() {
+                if(ajax_submit.checked){
+                    successSelect.value = 0;
+                    errorSelect.value = 0;
+                    successSelect.disabled = true;
+                    errorSelect.disabled = true;
+                }
+                else{
+                    successSelect.disabled = false;
+                    errorSelect.disabled = false;
+                }
+            }
+
+            updateAjaxSubmitState();
+
+            ajax_submit.addEventListener('change', updateAjaxSubmitState);
 
             rows.forEach(row => {
                 const visible = row.querySelector('input[name^="visible_fields"]');
@@ -283,7 +307,6 @@ function enterwell_render_settings_page() {
 
                 if (!visible || !required) return;
 
-                // Skip protected fields
                 if (visible.disabled || required.disabled) return;
 
                 function updateState() {
@@ -295,10 +318,8 @@ function enterwell_render_settings_page() {
                     }
                 }
 
-                // Initialize on load
                 updateState();
 
-                // Add listeners
                 visible.addEventListener('change', updateState);
             });
         });

@@ -18,7 +18,6 @@ jQuery(document).ready(function ($) {
     const fileInfo = $('#file-info');
     const uploadDescription = $('#upload-description');
     const invalidFormatFeedback = $('#invalid-format-feedback');
-    const form = $('#enterwell-form');
 
     // Slike za različite state-ove
     const icons = {
@@ -83,10 +82,19 @@ jQuery(document).ready(function ($) {
         if (!val) {
             $field.addClass('invalid');
             $field.closest('.form-group').find('.feedback').addClass('invalid-feedback').text('*Obavezna ispuna polja').show();
+            console.log('$field: ', $field);
+            if($field[0].name == 'file'){
+                $('#drop-zone').addClass('danger');
+                $('#invalid-format-feedback').text('*Obavezna ispuna polja').removeClass('hidden');
+            }
             return false;
         } else {
             $field.removeClass('invalid');
             $field.closest('.form-group').find('.feedback').removeClass('invalid-feedback').text('*Obavezno');
+            if($field.name == 'file'){
+                $('#drop-zone').removeClass('danger');
+                $('#invalid-format-feedback').text('* Format nije podržan').addClass('hidden');
+            }
             return true;
         }
     }
@@ -164,19 +172,62 @@ jQuery(document).ready(function ($) {
 
     // Validacija na submit
     $form.on('submit', function (e) {
+        let valid = validateFields();
+
+        if (!valid) e.preventDefault();
+    });
+
+
+    function validateFields() {
         let valid = true;
 
         $requiredFields.each(function () {
             if (!validateField($(this))) {
                 if (valid) {
-                    $('html, body').animate({ scrollTop: $(this).closest('.form-group').offset().top - 60 }, 300);
+                    $('html, body').animate({ scrollTop: $(this).closest('.form-group .invalid').offset().top + 500 }, 300);
                 }
                 valid = false;
             }
         });
 
-        if (!valid) e.preventDefault();
-    });
+        return valid;
+    }
+
+    if($('#ajax-submit').length > 0){
+        $('#ajax-submit').on('click', function(e){
+            e.preventDefault();
+
+            let valid = validateFields();
+
+            if (!valid){
+                return;
+            }
+
+            let formData = new FormData($form[0]);
+
+            formData.append('action', 'enterwell_form_submit_ajax');
+
+            $.ajax({
+                url: enterwell_plugin.ajax_url,
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+
+                success: function(response) {
+                    if (response.success) {
+                        $('.entry-content').html(response.data.html);
+                    } else {
+                        $('.entry-content').html(response.data.html);
+                    }
+                },
+
+                error: function(xhr, status, error){
+                    alert("Greška u komunikaciji sa serverom.");
+                }
+            });
+        });
+    }
 
     // Inicijalno stanje
     setDropState('idle');

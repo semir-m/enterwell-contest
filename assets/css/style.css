@@ -208,6 +208,9 @@ body input[type=number] {
 .upload-column .upload-box.error #file-info {
   color: #D9452D !important;
 }
+.upload-column .upload-box.danger {
+  --border-color: #D9452D;
+}
 .upload-column .upload-box #file-info,
 .upload-column .upload-box #upload-description {
   position: absolute;

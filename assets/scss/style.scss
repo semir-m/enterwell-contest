@@ -273,6 +273,10 @@ body {
         }
     }
 
+    &.danger {
+        --border-color: #D9452D;
+    }
+
     #file-info,
     #upload-description {
         position: absolute;

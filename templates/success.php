@@ -6,6 +6,8 @@
         <img class="result-image" src="<?= plugin_dir_url(__FILE__) ?>../assets/img/icon-success.png" alt="Success" />
         <h1><?= esc_html($settings['success_title'] ?? 'Uspješna prijava'); ?></h1>
         <p class="result-description"><?= esc_html($settings['success_desc'] ?? 'Dok čekaš mail potvrde, vrati se i pročitaj zadnji korak na putu do nagrade.'); ?></p>
-        <button class="btn-primary"><?= esc_html($settings['success_btn'] ?? 'OK'); ?></button>
+        <a href="<?= esc_url($settings['success_link'] ?? '#'); ?>"  class="btn-primary">
+            <?= esc_html($settings['success_btn'] ?? 'OK'); ?>
+        </a>
     </div>
 </div>

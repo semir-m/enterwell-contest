@@ -519,6 +519,18 @@ body {
   &:focus { outline-width: 0; }
 }
 
+a.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    appearance: button;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    width: 160px !important;
+    height: 20px !important;
+}
+
 .hidden { display: none; }
 
 /* ==== RESPONSIVE ==== */

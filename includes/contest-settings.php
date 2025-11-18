@@ -43,11 +43,13 @@ function enterwell_get_default_settings() {
         'success_title' => 'Uspješna prijava',
         'success_desc'  => 'Dok čekaš mail potvrde, vrati se i pročitaj zadnji korak na putu do nagrade.',
         'success_btn'   => 'OK',
+        'success_link'  => '',
 
         // error page
         'error_title'   => 'Neuspješna prijava',
         'error_desc'    => 'Došlo je do greške u komunikaciji. Provjeri svoju internetsku vezu i pokušaj ponovo.',
         'error_btn'     => 'Pokušaj ponovo',
+        'error_link'  => '',
 
         // visible fields (default: svi uključeni)
         'visible_fields' => array_fill_keys(array_keys($all_fields), 1),
@@ -93,11 +95,13 @@ function enterwell_render_settings_page() {
             'success_title' => sanitize_text_field($_POST['success_title'] ?? ''),
             'success_desc'  => sanitize_textarea_field($_POST['success_desc'] ?? ''),
             'success_btn'   => sanitize_text_field($_POST['success_btn'] ?? ''),
+            'success_link'   => sanitize_text_field($_POST['success_link'] ?? ''),
 
             // error textovi
             'error_title' => sanitize_text_field($_POST['error_title'] ?? ''),
             'error_desc'  => sanitize_textarea_field($_POST['error_desc'] ?? ''),
             'error_btn'   => sanitize_text_field($_POST['error_btn'] ?? ''),
+            'error_link'   => sanitize_text_field($_POST['error_link'] ?? ''),
 
             // visible fields
             'visible_fields' => array_map('intval', $_POST['visible_fields'] ?? []),
@@ -127,8 +131,11 @@ function enterwell_render_settings_page() {
             </p>
             <ul style="margin:5px 0 0 20px; padding:0; list-style:disc;">
                 <li>Koja polja se prikazuju na formi (upload računa, ime, prezime, adresa, itd.)</li>
+                <li>Koja polja forme zahtjevaju obavezan unos</li>
+                <li>Ajax submit - da li se submit radi putem ajaxa (one page)</li>
                 <li>Odabir stranica za uspješnu prijavu i grešku u prijavi</li>
                 <li>Tekstove za globalni header, uspješnu prijavu i grešku u prijavi</li>
+                <li>Tekstove i linkove gumbova uspješne prijave i greške u prijavi</li>
                 <li>Reset postavki na defaultne vrijednosti</li>
             </ul>
             <p style="margin-top:10px; font-weight:600;">Shortcode-i:</p>
@@ -138,7 +145,7 @@ function enterwell_render_settings_page() {
                 <li><code>[enterwell_error_screen]</code> - prikazuje grešku u prijavi</li>
             </ul>
             <p style="margin-top:5px; font-size:12px; color:#777;">
-                Napomena: Ako stranice za formu, uspješnu prijavu i grešku u prijavi ne postoje, kreirajte ih ručno i unesite odgovarajući shortcode.
+                Napomena: Ako stranice za formu, uspješnu prijavu i grešku u prijavi ne postoje, kreirajte ih ručno i unesite odgovarajući shortcode. Ako koristite ajax submit, stranice za uspješnu prijavu i grešku u prijavi nije potrebno postavljati.
             </p>
             <p style="margin-top:5px; font-size:12px; color:#777;">Autor: Semir Mašić</p>
         </div>
@@ -251,6 +258,10 @@ function enterwell_render_settings_page() {
                     <label for="success_btn">Tekst gumba</label>
                     <input type="text" name="success_btn" id="success_btn" value="<?= esc_attr($settings['success_btn']); ?>">
                 </div>
+                <div class="form-row">
+                    <label for="success_link">Link gumba</label>
+                    <input type="text" name="success_link" value="<?= esc_attr($settings['success_link']); ?>">
+                </div>
             </div>
 
             <!-- Error page texts -->
@@ -267,6 +278,10 @@ function enterwell_render_settings_page() {
                 <div class="form-row">
                     <label for="error_btn">Tekst gumba</label>
                     <input type="text" name="error_btn" id="error_btn" value="<?= esc_attr($settings['error_btn']); ?>">
+                </div>
+                <div class="form-row">
+                    <label for="error_link">Link gumba</label>
+                    <input type="text" name="error_link" value="<?= esc_attr($settings['error_link']); ?>">
                 </div>
             </div>
 
